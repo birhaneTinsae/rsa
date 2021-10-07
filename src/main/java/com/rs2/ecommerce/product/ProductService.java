@@ -15,5 +15,7 @@ public interface ProductService {
 
     Page<Product> search(Specification<Product> spec, Pageable pageable);
 
+    public Page<Product> search(String name, ProductType type, Pageable pageable);
+
     Page<Product> getProducts(Pageable pageable);
 }

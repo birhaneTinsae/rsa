@@ -1,5 +1,7 @@
 package com.rs2.ecommerce.basket;
 
+import com.rs2.ecommerce.product.Product;
+import com.rs2.ecommerce.product.ProductService;
 import com.rs2.ecommerce.security.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,15 @@ import static com.rs2.ecommerce.utils.Util.getUsername;
 public class BasketServiceImp implements BasketService {
     private final BasketRepository basketRepository;
     private final UserService userService;
+    private final ProductService productService;
 
     @Override
     public Basket createOrder(Basket basket) {
+
         var user = userService.getUserByUsername(getUsername());
+        var product = productService.getProduct(basket.getProduct().getId());
         basket.setUser(user);
+        basket.setProduct(product);
         return basketRepository.save(basket);
     }
 

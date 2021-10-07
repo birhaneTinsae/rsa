@@ -27,6 +27,15 @@ public interface ProductAPI {
     @PutMapping("/{productId}")
     ProductDTO updateProduct(@PathVariable long productId, @Valid @RequestBody ProductDTO product);
 
+    @GetMapping("/search/advanced")
+    ResponseEntity<PagedModel<ProductDTO>> searchAdvanced(@Parameter(description = "pagination object",
+            schema = @Schema(implementation = Pageable.class))
+                                                  @Valid Pageable pageable
+            , PagedResourcesAssembler assembler
+            , UriComponentsBuilder uriBuilder
+
+            , final HttpServletResponse response, @RequestParam(required = false) String searchQuery);
+
     @GetMapping("/search")
     ResponseEntity<PagedModel<ProductDTO>> search(@Parameter(description = "pagination object",
             schema = @Schema(implementation = Pageable.class))
@@ -34,7 +43,7 @@ public interface ProductAPI {
             , PagedResourcesAssembler assembler
             , UriComponentsBuilder uriBuilder
 
-            , final HttpServletResponse response, @RequestParam(required = false) String searchQuery);
+            , final HttpServletResponse response, @RequestParam(required = false) ProductType type,String name);
 
 
     @GetMapping()

@@ -50,15 +50,25 @@ public class ProductController implements ProductAPI {
         return dtoMapper(productService.updateProduct(productId, dtoMapper(product, Product.class, modelMapper)),
                 ProductDTO.class, modelMapper);
     }
-
+//
     @Override
-    public ResponseEntity<PagedModel<ProductDTO>> search(Pageable pageable, PagedResourcesAssembler assembler, UriComponentsBuilder uriBuilder, HttpServletResponse response, String searchQuery) {
+    public ResponseEntity<PagedModel<ProductDTO>> searchAdvanced(Pageable pageable, PagedResourcesAssembler assembler, UriComponentsBuilder uriBuilder, HttpServletResponse response, String searchQuery) {
         Specification<Product> spec = resolveSpecificationFromInfixExpr(searchQuery);
         eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<>(
                 ProductDTO.class, uriBuilder, response, pageable.getPageNumber()
                 , productService.getProducts(pageable).getTotalPages(), pageable.getPageSize()));
 
         return new ResponseEntity<PagedModel<ProductDTO>>(assembler.toModel(productService.search(spec,pageable).map(product -> dtoMapper(product, ProductDTO.class, modelMapper))),
+                HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<PagedModel<ProductDTO>> search(Pageable pageable, PagedResourcesAssembler assembler, UriComponentsBuilder uriBuilder, HttpServletResponse response, ProductType type,String name) {
+        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<>(
+                ProductDTO.class, uriBuilder, response, pageable.getPageNumber()
+                , productService.getProducts(pageable).getTotalPages(), pageable.getPageSize()));
+
+        return new ResponseEntity<PagedModel<ProductDTO>>(assembler.toModel(productService.search(name,type,pageable).map(product -> dtoMapper(product, ProductDTO.class, modelMapper))),
                 HttpStatus.OK);
     }
 

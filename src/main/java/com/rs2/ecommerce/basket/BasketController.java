@@ -1,11 +1,13 @@
 package com.rs2.ecommerce.basket;
 
+import com.rs2.ecommerce.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.rs2.ecommerce.utils.Util.dtoMapper;
 import static com.rs2.ecommerce.utils.Util.mapList;
@@ -24,6 +26,7 @@ public class BasketController implements BasketAPI {
 
     @Override
     public List<BasketDTO> createOrders(List<BasketDTO> baskets) {
+
         return mapList(basketService.createOrders(mapList(baskets, Basket.class, modelMapper)), BasketDTO.class, modelMapper);
     }
 
