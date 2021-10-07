@@ -16,10 +16,12 @@ For this project the following packages are used:
 
 after cloning the repository you have to define an environment variable by the name `SECRET_KEY`
 
-Then you can easily build image using `mvnw spring-boor:build-image` command from spring boot 
+Then you can easily build image using `mvnw spring-boot:build-image` command from spring boot 
 
 ## Database setup
 - Username `sa`
 - Password `password`
 - Name `rs2`
 - url `jdbc:h2:mem:rs2`
+
+You can access the browser based **h2 console** at `http://{host}:{port}/h2`
