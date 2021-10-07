@@ -12,7 +12,7 @@ For this project the following packages are used:
 - Log4j
 - Jwt
 
-##How to set up this project
+## How to set up this project
 
 after cloning the repository you have to define an environment variable by the name `SECRET_KEY`
 
